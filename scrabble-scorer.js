@@ -59,11 +59,18 @@ let vowelBonusScorer = function (word) {
    return totalScore; 
 };
 
-let scrabbleScorer;
+let scrabbleScorer = function (word) {
+   word = word.toLowerCase(); 
+   let totalPoints = 0; 
+	for (let i = 0; i < word.length; i++) {
+      totalPoints += Number(newPointStructure[word[i]]); 
+	}
+	return totalPoints;
+};
 
-let scorer1 = {name:"Simple Score", description:"Each letter is worth 1 point.", scoringFunction: function(word) {return simpleScorer(word)}}
-let scorer2 = {name:"Bonus Vowels", description:"Vowels are 3 pts, consonants are 1 pt.", scoringFunction: function(word) {return vowelBonusScorer(word)}}
-let scorer3 = {name:"Scrabble", description:"The traditional scoring algorithm.", scoringFunction: function(word) {return oldScrabbleScorer(word)}}
+let scorer1 = {name:"Simple Score", description:"Each letter is worth 1 point.", scoringFunction: simpleScorer}
+let scorer2 = {name:"Bonus Vowels", description:"Vowels are 3 pts, consonants are 1 pt.", scoringFunction: vowelBonusScorer}
+let scorer3 = {name:"Scrabble", description:"The traditional scoring algorithm.", scoringFunction: scrabbleScorer}
 
 const scoringAlgorithms = [scorer1, scorer2, scorer3];
 
@@ -77,9 +84,19 @@ function scorerPrompt() {
    return scoringAlgorithms[selection]; 
 }
 
-function transform() {};
+function transform(originalObj) {
+   let newObj = {};
+   for (let key in originalObj) {
+      for (let i = 0; i < originalObj[key].length; i++) {
+         let newKey = originalObj[key][i].toLowerCase();
+         newObj[newKey] = Number(key);
+      }
+   }
+   return newObj;
+};
 
-let newPointStructure;
+let newPointStructure = transform(oldPointStructure);
+//let newPointStructure = {a:1,e:1,i:1,o:1,u:1,l:1,n:1,r:1,s:1,t:1,d:2,g:2,b:3,c:3,m:3,p:3,f:4,h:4,v:4,w:4,y:4,k:5,j:8,x:8,q:10,z:10};
 
 function runProgram() {
    startingWord = initialPrompt();
