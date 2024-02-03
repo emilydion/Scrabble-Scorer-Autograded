@@ -67,7 +67,15 @@ let scorer3 = {name:"Scrabble", description:"The traditional scoring algorithm."
 
 const scoringAlgorithms = [scorer1, scorer2, scorer3];
 
-function scorerPrompt() {}
+function scorerPrompt() {
+   console.log("\nScoring Options:"); 
+   for (let i = 0; i < scoringAlgorithms.length; i++) { 
+      console.log(`Option ${i} - ${scoringAlgorithms[i].name}: ${scoringAlgorithms[i].description}`);
+   }
+   let selection = input.question("\nHow would you like to be scored? Enter 0, 1, or 2: ");
+
+   return scoringAlgorithms[selection]; 
+}
 
 function transform() {};
 
@@ -75,8 +83,8 @@ let newPointStructure;
 
 function runProgram() {
    startingWord = initialPrompt();
-   console.log(scoringAlgorithms[1].name); 
-   console.log(scoringAlgorithms[1].scoringFunction(startingWord));
+   let selectedScorer = scorerPrompt(); 
+   console.log(`Score for '${startingWord}': ${selectedScorer.scoringFunction(startingWord)}`);
 }
 
 // Don't write any code below this line //
