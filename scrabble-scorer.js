@@ -68,9 +68,9 @@ let scrabbleScorer = function (word) {
 	return totalPoints;
 };
 
-let scorer1 = {name:"Simple Score", description:"Each letter is worth 1 point.", scoringFunction: simpleScorer}
-let scorer2 = {name:"Bonus Vowels", description:"Vowels are 3 pts, consonants are 1 pt.", scoringFunction: vowelBonusScorer}
-let scorer3 = {name:"Scrabble", description:"The traditional scoring algorithm.", scoringFunction: scrabbleScorer}
+let scorer1 = {name:"Simple Score", description:"Each letter is worth 1 point.", scorerFunction: simpleScorer}
+let scorer2 = {name:"Bonus Vowels", description:"Vowels are 3 pts, consonants are 1 pt.", scorerFunction: vowelBonusScorer}
+let scorer3 = {name:"Scrabble", description:"The traditional scoring algorithm.", scorerFunction: scrabbleScorer}
 
 const scoringAlgorithms = [scorer1, scorer2, scorer3];
 
@@ -96,12 +96,11 @@ function transform(originalObj) {
 };
 
 let newPointStructure = transform(oldPointStructure);
-//let newPointStructure = {a:1,e:1,i:1,o:1,u:1,l:1,n:1,r:1,s:1,t:1,d:2,g:2,b:3,c:3,m:3,p:3,f:4,h:4,v:4,w:4,y:4,k:5,j:8,x:8,q:10,z:10};
 
 function runProgram() {
-   startingWord = initialPrompt();
+   let startingWord = initialPrompt();
    let selectedScorer = scorerPrompt(); 
-   console.log(`Score for '${startingWord}': ${selectedScorer.scoringFunction(startingWord)}`);
+   console.log(`Score for '${startingWord}': ${selectedScorer.scorerFunction(startingWord)}`);
 }
 
 // Don't write any code below this line //
